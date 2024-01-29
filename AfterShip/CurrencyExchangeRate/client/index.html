@@ -11,8 +11,12 @@
       id="currency-input"
       placeholder="Enter currency code (Only USD allowed)"
     />
+    <input type="date" id="date-input" />
     <button id="currency-btn">Get exchange rate</button>
-    <ul id="currency-list"></ul>
+    <div style="display: flex; flex-direction: row">
+      <ul id="latest-list"></ul>
+      <ul id="historical-list"></ul>
+    </div>
     <script src="./index.js" type="module" />
   </body>
 </html>

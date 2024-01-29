@@ -11,15 +11,21 @@ const server = http.createServer(async (req, res) => {
   };
 
   const url = nodeUrl.parse(req.url, true);
-  const { currency } = url.query;
+  const { currency, date } = url.query;
 
-  const response = await fetch(
+  const latestResponse = await fetch(
     `https://openexchangerates.org/api/latest.json?app_id=${APP_ID}&base=${currency.toUpperCase()}`
   );
-  const data = await response.json();
+  const latestData = await latestResponse.json();
+
+  const historicalResponse = await fetch(
+    `https://openexchangerates.org/api/historical/${date}.json?app_id=${APP_ID}&base=${currency.toUpperCase()}`
+  );
+
+  const historicalData = await historicalResponse.json();
 
   res.writeHead(200, headers);
-  res.end(JSON.stringify(data));
+  res.end(JSON.stringify({ latest: latestData, historical: historicalData }));
 });
 
 server.listen(PORT, () => {
